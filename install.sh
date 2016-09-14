@@ -60,10 +60,16 @@ EOF
 
 sudo pam-auth-update
 
+myhostname=$(uname -n | tr [A-Z] [a-z])
+echo $myhostname
+
+
+sleep 5
 
 sudo ipa-client-install -N                 \
         --domain=$ipa_domain               \
         --server=$ipa_hostname.$ipa_domain \
+        --hostname=$myhostname.$ipa_domain \
         -p admin                           \
         -w abcd1234                        \
         --mkhomedir --force-join
