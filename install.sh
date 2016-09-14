@@ -32,15 +32,11 @@ echo "$ipa_ip    $ipa_hostname.$ipa_domain $ipa_hostname" | sudo tee -a /etc/hos
 
 echo "Installing: openssh-server"
 sleep 3
-sudo $app_cmd install -y openssh-server
+sudo $app_cmd install -y openssh-server sssd
 
 echo "Installing:  freeipa-client"
 sleep 3
 sudo $app_cmd install -y freeipa-client
-
-echo "Installing:  sssd"
-sleep 3
-sudo $app_cmd install -y sssd
 
 sudo rm /etc/ipa/default.conf
 
