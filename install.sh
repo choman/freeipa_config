@@ -63,9 +63,6 @@ sudo pam-auth-update
 myhostname=$(uname -n | tr [A-Z] [a-z])
 echo $myhostname
 
-
-sleep 5
-
 sudo ipa-client-install -N                 \
         --domain=$ipa_domain               \
         --server=$ipa_hostname.$ipa_domain \
@@ -75,9 +72,7 @@ sudo ipa-client-install -N                 \
         --mkhomedir --force-join
 
 sudo sed -i 's/_srv_,\s+/ /' /etc/sssd/sssd.conf
+sudo cp -pv 50-myconfig.conf /usr/share/lightdm/lightdm.conf.d/50-myconfig.conf
 
 sudo service sssd restart
-
-
-sudo cp -pv 50-myconfig.conf /usr/share/lightdm/lightdm.conf.d/50-myconfig.conf
 sudo service lightdm restart
