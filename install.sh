@@ -27,10 +27,20 @@ sudo -E apt-add-repository http://ppa.launchpad.net/sssd/updates/ubuntu
 sudo $app_cmd update
 sudo $app_cmd dist-upgrade -y
 
-echo 
+echo "Setting /etc/hosts entry"
 echo "$ipa_ip    $ipa_hostname.$ipa_domain $ipa_hostname" | sudo tee -a /etc/hosts
 
-sudo $app_cmd install -y openssh-server freeipa-client sssd
+echo "Installing: openssh-server"
+sleep 3
+sudo $app_cmd install -y openssh-server
+
+echo "Installing:  freeipa-client"
+sleep 3
+sudo $app_cmd install -y freeipa-client
+
+echo "Installing:  sssd"
+sleep 3
+sudo $app_cmd install -y sssd
 
 sudo rm /etc/ipa/default.conf
 
@@ -52,11 +62,11 @@ sudo pam-auth-update
 
 
 sudo ipa-client-install -N                 \
-        --domain $ipa_domain               \
-        --server $ipa_hostname.$ipa_domain \
+        --domain=$ipa_domain               \
+        --server=$ipa_hostname.$ipa_domain \
         -p admin                           \
         -w abcd1234                        \
-        --mkhomedir
+        --mkhomedir --force-join
 
 sudo sed -i 's/_srv_,\s+/ /' /etc/sssd/sssd.conf
 
