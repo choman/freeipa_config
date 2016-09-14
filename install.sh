@@ -1,13 +1,22 @@
 #!/bin/bash
 
 
-printf "Enter the IP of the IPA Server: "
+default="/usr/bin/apt-get"
+app_cmd=$(which apt-fast)
+
+if [ -z "$app_cmd" ]; then
+   app_cmd="/usr/bin/apt-get"
+fi
+
+apt_cmd=${tmp-$default}
+
+printf "Enter the IPA Server IP: "
 read ipa_ip
 
-printf "Enter the Hostname of the IPA Server: "
+printf "Enter the IPA Server Hostname: "
 read ipa_hostname
 
-printf "Enter the Domain Name of the IPA Server: "
+printf "Enter the IPA Server Domain: "
 read ipa_domain
 
 echo "$ipa_ip    $ipa_hostname.$ipa_domain $ipa_hostname"
@@ -15,13 +24,13 @@ echo "$ipa_ip    $ipa_hostname.$ipa_domain $ipa_hostname"
 
 sudo -E apt-add-repository http://ppa.launchpad.net/freeipa/ppa/ubuntu
 sudo -E apt-add-repository http://ppa.launchpad.net/sssd/updates/ubuntu
-sudo apt-get update
-sudo apt-get upgrade
+sudo $app_cmd update
+sudo $app_cmd -y dist-upgrade
 
 echo 
 echo "$ipa_ip    $ipa_hostname.$ipa_domain $ipa_hostname" | sudo tee -a /etc/hosts
 
-sudo apt-get install openssh-server freeipa-client sssd
+sudo $app_cmd install -y openssh-server freeipa-client sssd
 
 sudo rm /etc/ipa/default.conf
 
