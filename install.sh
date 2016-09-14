@@ -21,6 +21,8 @@ sudo apt-get upgrade
 echo 
 echo "$ipa_ip    $ipa_hostname.$ipa_domain $ipa_hostname" | sudo tee -a /etc/hosts
 
+sudo apt-get install openssh-server freeipa-client sssd
+
 sudo rm /etc/ipa/default.conf
 
 sudo mkdir /var/run/ipa
