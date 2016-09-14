@@ -25,7 +25,7 @@ echo "$ipa_ip    $ipa_hostname.$ipa_domain $ipa_hostname"
 sudo -E apt-add-repository http://ppa.launchpad.net/freeipa/ppa/ubuntu
 sudo -E apt-add-repository http://ppa.launchpad.net/sssd/updates/ubuntu
 sudo $app_cmd update
-sudo $app_cmd -y dist-upgrade
+sudo $app_cmd dist-upgrade -y
 
 echo 
 echo "$ipa_ip    $ipa_hostname.$ipa_domain $ipa_hostname" | sudo tee -a /etc/hosts
@@ -51,7 +51,7 @@ EOF
 sudo pam-auth-update
 
 
-sudo ipa-client-install -N --hostname $ipa_hostname.$ipa_domain --mkhomedir
+sudo ipa-client-install -N --domain $ipa_domain --server $ipa_hostname.$ipa_domain --mkhomedir
 sudo sed -i 's/_srv_,\s+/ /' /etc/sssd/sssd.conf
 
 sudo service sssd restart
