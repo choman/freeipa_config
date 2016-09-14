@@ -43,7 +43,7 @@ sudo pam-auth-update
 
 
 sudo ipa-client-install -N --hostname $ipa_hostname.$ipa_domain --mkhomedir
-sudo sed -i 's/_srv_,//' /etc/sssd/sssd.conf
+sudo sed -i 's/_srv_,\s+/ /' /etc/sssd/sssd.conf
 
 sudo service sssd restart
 
