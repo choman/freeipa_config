@@ -51,7 +51,13 @@ EOF
 sudo pam-auth-update
 
 
-sudo ipa-client-install -N --domain $ipa_domain --server $ipa_hostname.$ipa_domain --mkhomedir
+sudo ipa-client-install -N                 \
+        --domain $ipa_domain               \
+        --server $ipa_hostname.$ipa_domain \
+        -p admin                           \
+        -w abcd1234                        \
+        --mkhomedir
+
 sudo sed -i 's/_srv_,\s+/ /' /etc/sssd/sssd.conf
 
 sudo service sssd restart
