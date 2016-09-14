@@ -1,0 +1,9 @@
+http://askubuntu.com/questions/295075/freeipa-client-on-ubuntu
+
+http://askubuntu.com/questions/451950/how-to-configure-lightdm-to-allow-manual-logins-in-ubuntu-14-04
+
+https://www.redhat.com/archives/freeipa-users/2013-June/msg00091.html
+https://www.unixmen.com/how-to-join-an-ubuntu-desktop-into-an-active-directory-domain/
+http://superuser.com/questions/482675/unable-to-log-into-ubuntu
+www.freeipa.org/page/V4/Time-Based_Account_Policies
+https://fedorahosted.org/sssd/wiki/Troubleshooting
