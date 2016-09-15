@@ -58,6 +58,7 @@ sudo pam-auth-update
 
 if [ true ]; then
     myhostname=$(uname -n | tr [A-Z] [a-z])
+    sudo sed -i 's/$myhostname/$myhostname  $myhostname.$ipa_domain/i' /etc/hosts
 
 else
     myhostname=$(uname -n | tr [A-Z] [a-z])
