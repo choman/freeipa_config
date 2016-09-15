@@ -56,17 +56,8 @@ EOF
 
 sudo pam-auth-update
 
-if [ true ]; then
-    myhostname=$(uname -n | tr [A-Z] [a-z])
-    sudo sed -i 's/$myhostname/$myhostname  $myhostname.$ipa_domain/i' /etc/hosts
-
-else
-    myhostname=$(uname -n | tr [A-Z] [a-z])
-    echo $myhostname
-    myip=$(ip route get $ipa_ip | awk '{print $NF; exit}')
-
-    echo "$myip    $myhostname $myhostname.$ipa_domain" | sudo tee -a /etc/hosts
-fi
+myhostname=$(uname -n | tr [A-Z] [a-z])
+sudo sed -i 's/$myhostname/& $myhostname  $myhostname.$ipa_domain/i' /etc/hosts
 
 sudo ipa-client-install -N                 \
         --domain=$ipa_domain               \
