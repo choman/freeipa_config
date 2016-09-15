@@ -59,7 +59,7 @@ myhostname=$(uname -n | tr [A-Z] [a-z])
 echo $myhostname
 myip=$(ip route get $ipa_ip | awk '{print $NF; exit}')
 
-echo "$my_ip    $myhostname.$ipa_domain $myhostname" | sudo tee -a /etc/hosts
+echo "$myip    $myhostname.$ipa_domain $myhostname" | sudo tee -a /etc/hosts
 
 sudo ipa-client-install -N                 \
         --domain=$ipa_domain               \
@@ -69,10 +69,11 @@ sudo ipa-client-install -N                 \
         -w abcd1234                        \
         --mkhomedir --force-join
 
-sudo sed -i 's/_srv_,\s+/ /' /etc/sssd/sssd.conf
 sudo cp -pv 50-myconfig.conf /usr/share/lightdm/lightdm.conf.d/50-myconfig.conf
 
 sudo pam-auth-update
+
+sudo sed -i 's/_srv_,\s+/ /' /etc/sssd/sssd.conf
 
 sudo service sssd restart
 sudo service lightdm restart
