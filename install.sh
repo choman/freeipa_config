@@ -30,13 +30,13 @@ sudo $app_cmd dist-upgrade -y
 echo "Setting /etc/hosts entry"
 echo "$ipa_ip    $ipa_hostname.$ipa_domain $ipa_hostname" | sudo tee -a /etc/hosts
 
-echo "Installing: openssh-server sssd"
+echo "Installing: openssh-server freeipa-client sssd"
 sleep 3
-sudo $app_cmd install -y openssh-server sssd
+sudo $app_cmd install -y openssh-server freeipa-client sssd
 
-echo "Installing:  freeipa-client"
-sleep 3
-sudo $app_cmd install -y freeipa-client
+##echo "Installing:  freeipa-client"
+##sleep 3
+##sudo $app_cmd install -y freeipa-client
 
 sudo rm /etc/ipa/default.conf
 
@@ -54,6 +54,7 @@ Session:
         required                        pam_mkhomedir.so umask=0022 skel=/etc/skel
 EOF
 
+sudo pam-auth-update
 
 myhostname=$(uname -n | tr [A-Z] [a-z])
 echo $myhostname
@@ -67,11 +68,10 @@ sudo ipa-client-install -N                 \
         --hostname=$myhostname.$ipa_domain \
         -p admin                           \
         -w abcd1234                        \
-        --mkhomedir --force-join
+        --mkhomedir
 
 sudo cp -pv 50-myconfig.conf /usr/share/lightdm/lightdm.conf.d/50-myconfig.conf
 
-sudo pam-auth-update
 
 sudo sed -i 's/_srv_, //' /etc/sssd/sssd.conf
 
