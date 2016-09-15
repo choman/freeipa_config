@@ -71,7 +71,7 @@ fi
 sudo ipa-client-install -N                 \
         --domain=$ipa_domain               \
         --server=$ipa_hostname.$ipa_domain \
-        --hostname=$myhostname             \
+        --hostname=$myhostname.$ipa_domain \
         -p admin                           \
         -w abcd1234                        \
         --mkhomedir --force-join
