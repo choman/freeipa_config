@@ -56,16 +56,21 @@ EOF
 
 sudo pam-auth-update
 
-myhostname=$(uname -n | tr [A-Z] [a-z])
-echo $myhostname
-myip=$(ip route get $ipa_ip | awk '{print $NF; exit}')
+if [ true ]; then
+    myhostname=$(uname -n | tr [A-Z] [a-z])
 
-echo "$myip    $myhostname $myhostname.$ipa_domain" | sudo tee -a /etc/hosts
+else
+    myhostname=$(uname -n | tr [A-Z] [a-z])
+    echo $myhostname
+    myip=$(ip route get $ipa_ip | awk '{print $NF; exit}')
+
+    echo "$myip    $myhostname $myhostname.$ipa_domain" | sudo tee -a /etc/hosts
+fi
 
 sudo ipa-client-install -N                 \
         --domain=$ipa_domain               \
         --server=$ipa_hostname.$ipa_domain \
-        --hostname=$myhostname.$ipa_domain \
+        --hostname=$myhostname             \
         -p admin                           \
         -w abcd1234                        \
         --mkhomedir --force-join
