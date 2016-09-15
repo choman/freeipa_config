@@ -57,6 +57,9 @@ EOF
 
 myhostname=$(uname -n | tr [A-Z] [a-z])
 echo $myhostname
+myip=$(ip route get $ipa_ip | awk '{print $NF; exit}')
+
+echo "$my_ip    $myhostname.$ipa_domain $myhostname" | sudo tee -a /etc/hosts
 
 sudo ipa-client-install -N                 \
         --domain=$ipa_domain               \
