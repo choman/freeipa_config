@@ -30,7 +30,7 @@ sudo $app_cmd dist-upgrade -y
 echo "Setting /etc/hosts entry"
 echo "$ipa_ip    $ipa_hostname.$ipa_domain $ipa_hostname" | sudo tee -a /etc/hosts
 
-echo "Installing: openssh-server"
+echo "Installing: openssh-server sssd"
 sleep 3
 sudo $app_cmd install -y openssh-server sssd
 
@@ -54,7 +54,6 @@ Session:
         required                        pam_mkhomedir.so umask=0022 skel=/etc/skel
 EOF
 
-sudo pam-auth-update
 
 myhostname=$(uname -n | tr [A-Z] [a-z])
 echo $myhostname
@@ -69,6 +68,8 @@ sudo ipa-client-install -N                 \
 
 sudo sed -i 's/_srv_,\s+/ /' /etc/sssd/sssd.conf
 sudo cp -pv 50-myconfig.conf /usr/share/lightdm/lightdm.conf.d/50-myconfig.conf
+
+sudo pam-auth-update
 
 sudo service sssd restart
 sudo service lightdm restart
