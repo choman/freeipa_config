@@ -73,7 +73,9 @@ sudo cp -pv 50-myconfig.conf /usr/share/lightdm/lightdm.conf.d/50-myconfig.conf
 
 sudo pam-auth-update
 
-sudo sed -i 's/_srv_,\s+/ /' /etc/sssd/sssd.conf
+sudo sed -i 's/_srv_, //' /etc/sssd/sssd.conf
+
+sleep 10
 
 sudo service sssd restart
 sudo service lightdm restart
